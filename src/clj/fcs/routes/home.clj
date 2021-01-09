@@ -14,7 +14,7 @@
    {:middleware [middleware/wrap-csrf
                  middleware/wrap-formats]}
    ["/" {:get home-page}]
-   ["/docs" {:get (fn [_]
-                    (-> (response/ok (-> "docs/docs.md" io/resource slurp))
+   ["/status" {:get (fn [_]
+                    (-> (response/ok "# up and runnin'!")
                         (response/header "Content-Type" "text/plain; charset=utf-8")))}]])
 

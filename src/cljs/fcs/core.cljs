@@ -21,7 +21,7 @@
   (r/with-let [expanded? (r/atom false)]
     [:nav.navbar.is-info>div.container
      [:div.navbar-brand
-      [:a.navbar-item {:href "/" :style {:font-weight :bold}} "fcs"]
+      [:a.navbar-item {:href "/" :style {:font-weight :bold}} "App"]
       [:span.navbar-burger.burger
        {:data-target :nav-menu
         :on-click #(swap! expanded? not)
@@ -39,7 +39,7 @@
 
 (defn home-page []
   [:section.section>div.container>div.content
-   (when-let [docs @(rf/subscribe [:docs])]
+   (when-let [docs @(rf/subscribe [:page-content])]
      [:div {:dangerouslySetInnerHTML {:__html (md->html docs)}}])])
 
 (defn error-page []
