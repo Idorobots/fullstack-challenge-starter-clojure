@@ -25,6 +25,12 @@
  (fn [_ [_ url-key params query]]
    {:common/navigate-fx! [url-key params query]}))
 
+(rf/reg-event-fx
+ :common/error
+ (fn [{:keys [db]} [_ error]]
+   {:db (assoc db :common/error error)
+    :common/navigate-fx! [:error]}))
+
 (rf/reg-event-db
  :set-docs
  (fn [db [_ docs]]
@@ -36,7 +42,8 @@
    {:http-xhrio {:method          :get
                  :uri             "/docs"
                  :response-format (ajax/raw-response-format)
-                 :on-success       [:set-docs]}}))
+                 :on-success       [:set-docs]
+                 :on-failure       [:common/error]}}))
 
 (rf/reg-event-db
  :common/set-error
@@ -75,4 +82,4 @@
 (rf/reg-sub
  :common/error
  (fn [db _]
-   (:common/error db)))
+   (-> db :common/error :response)))

@@ -42,6 +42,11 @@
    (when-let [docs @(rf/subscribe [:docs])]
      [:div {:dangerouslySetInnerHTML {:__html (md->html docs)}}])])
 
+(defn error-page []
+  (when-let [error @(rf/subscribe [:common/error])]
+    [:section.section>div.container>div.content
+     [:div {:dangerouslySetInnerHTML {:__html error}}]]))
+
 (defn page []
   (if-let [page @(rf/subscribe [:common/page])]
     [:div
@@ -57,7 +62,9 @@
           :view        #'home-page
           :controllers [{:start (fn [_] (rf/dispatch [:page/init-home]))}]}]
     ["/about" {:name :about
-               :view #'about-page}]]))
+               :view #'about-page}]
+    ["/error" {:name :error
+               :view #'error-page}]]))
 
 (defn start-router! []
   (rfe/start!
