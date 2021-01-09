@@ -69,6 +69,12 @@
    (-> route :data :view)))
 
 (rf/reg-sub
+ :common/page-id
+ :<- [:common/route]
+ (fn [route _]
+   (-> route :data :name)))
+
+(rf/reg-sub
  :page-content
  (fn [db _]
    (:page-content db)))
