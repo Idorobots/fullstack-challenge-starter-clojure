@@ -63,12 +63,6 @@
    (-> db :common/route)))
 
 (rf/reg-sub
- :common/page-id
- :<- [:common/route]
- (fn [route _]
-   (-> route :data :name)))
-
-(rf/reg-sub
  :common/page
  :<- [:common/route]
  (fn [route _]
