@@ -13,11 +13,11 @@ You will need [Leiningen][1] 2.0 or above installed.
 You can package the project into a Docker container by running:
 
     lein uberjar
-    docker build . -t fsc
+    docker build . -t fcs
 
 Then to run it with:
 
-    docker run -p 8080:3000 fsc:latest
+    docker run -p 8080:3000 fcs:latest
 
 The app will be available at http://localhost:8080
 
@@ -31,7 +31,7 @@ To start the frontend app server, run:
 
 ## Testing
 
-To run the included backend tests (hopefuly I wrote some ¯\\\_(ツ)\_/¯) run either of the following commands:
+To run the included backend tests (hopefuly I wrote some ¯\\\_(ツ)\_/¯) run the following command:
 
     lein test
 
