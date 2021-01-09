@@ -37,41 +37,40 @@
                  [selmer "1.12.31"]]
 
   :min-lein-version "2.0.0"
-  
+
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
   :test-paths ["test/clj"]
   :resource-paths ["resources" "target/cljsbuild"]
   :target-path "target/%s/"
   :main ^:skip-aot fcs.core
 
-  :plugins [[lein-cljsbuild "1.1.7"]] 
+  :plugins [[lein-cljsbuild "1.1.7"]]
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
+
   :figwheel
   {:http-server-root "public"
    :server-logfile "log/figwheel-logfile.log"
    :nrepl-port 7002
    :css-dirs ["resources/public/css"]
    :nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
-  
 
   :profiles
   {:uberjar {:omit-source true
              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
-             :cljsbuild{:builds
-              {:min
-               {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
-                :compiler
-                {:output-dir "target/cljsbuild/public/js"
-                 :output-to "target/cljsbuild/public/js/app.js"
-                 :source-map "target/cljsbuild/public/js/app.js.map"
-                 :optimizations :advanced
-                 :pretty-print false
-                 :infer-externs true
-                 :closure-warnings
-                 {:externs-validation :off :non-standard-jsdoc :off}
-                 :externs ["react/externs/react.js"]}}}}
-             
+             :cljsbuild {:builds
+                        {:min
+                         {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
+                          :compiler
+                          {:output-dir "target/cljsbuild/public/js"
+                           :output-to "target/cljsbuild/public/js/app.js"
+                           :source-map "target/cljsbuild/public/js/app.js.map"
+                           :optimizations :advanced
+                           :pretty-print false
+                           :infer-externs true
+                           :closure-warnings
+                           {:externs-validation :off :non-standard-jsdoc :off}
+                           :externs ["react/externs/react.js"]}}}}
              :aot :all
              :uberjar-name "fcs.jar"
              :source-paths ["env/prod/clj" ]
@@ -93,33 +92,31 @@
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]
                                  [jonase/eastwood "0.3.5"]
                                  [lein-doo "0.1.11"]
-                                 [lein-figwheel "0.5.20"]] 
-                  :cljsbuild{:builds
-                   {:app
-                    {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
-                     :figwheel {:on-jsload "fcs.core/mount-components"}
-                     :compiler
-                     {:output-dir "target/cljsbuild/public/js/out"
-                      :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
-                      :optimizations :none
-                      :preloads [re-frisk.preload]
-                      :output-to "target/cljsbuild/public/js/app.js"
-                      :asset-path "/js/out"
-                      :source-map true
-                      :main "fcs.app"
-                      :pretty-print true}}}}
-                  
-                  
+                                 [lein-figwheel "0.5.20"]]
+                  :cljsbuild {:builds
+                             {:app
+                              {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
+                               :figwheel {:on-jsload "fcs.core/mount-components"}
+                               :compiler
+                               {:output-dir "target/cljsbuild/public/js/out"
+                                :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
+                                :optimizations :none
+                                :preloads [re-frisk.preload]
+                                :output-to "target/cljsbuild/public/js/app.js"
+                                :asset-path "/js/out"
+                                :source-map true
+                                :main "fcs.app"
+                                :pretty-print true}}}}
                   :doo {:build "test"}
-                  :source-paths ["env/dev/clj" ]
+                  :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user
                                  :timeout 120000}
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
    :project/test {:jvm-opts ["-Dconf=test-config.edn" ]
-                  :resource-paths ["env/test/resources"] 
-                  :cljsbuild 
+                  :resource-paths ["env/test/resources"]
+                  :cljsbuild
                   {:builds
                    {:test
                     {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
@@ -128,7 +125,6 @@
                       :main "fcs.doo-runner"
                       :optimizations :whitespace
                       :pretty-print true}}}}
-                  
                   }
    :profiles/dev {}
    :profiles/test {}})
