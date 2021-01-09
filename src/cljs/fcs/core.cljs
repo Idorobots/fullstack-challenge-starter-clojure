@@ -1,17 +1,17 @@
 (ns fcs.core
   (:require
-    [day8.re-frame.http-fx]
-    [reagent.dom :as rdom]
-    [reagent.core :as r]
-    [re-frame.core :as rf]
-    [goog.events :as events]
-    [goog.history.EventType :as HistoryEventType]
-    [markdown.core :refer [md->html]]
-    [fcs.ajax :as ajax]
-    [fcs.events]
-    [reitit.core :as reitit]
-    [reitit.frontend.easy :as rfe]
-    [clojure.string :as string])
+   [day8.re-frame.http-fx]
+   [reagent.dom :as rdom]
+   [reagent.core :as r]
+   [re-frame.core :as rf]
+   [goog.events :as events]
+   [goog.history.EventType :as HistoryEventType]
+   [markdown.core :refer [md->html]]
+   [fcs.ajax :as ajax]
+   [fcs.events]
+   [reitit.core :as reitit]
+   [reitit.frontend.easy :as rfe]
+   [clojure.string :as string])
   (:import goog.History))
 
 (defn nav-link [uri title page]
@@ -22,19 +22,19 @@
 
 (defn navbar [] 
   (r/with-let [expanded? (r/atom false)]
-              [:nav.navbar.is-info>div.container
-               [:div.navbar-brand
-                [:a.navbar-item {:href "/" :style {:font-weight :bold}} "fcs"]
-                [:span.navbar-burger.burger
-                 {:data-target :nav-menu
-                  :on-click #(swap! expanded? not)
-                  :class (when @expanded? :is-active)}
-                 [:span][:span][:span]]]
-               [:div#nav-menu.navbar-menu
-                {:class (when @expanded? :is-active)}
-                [:div.navbar-start
-                 [nav-link "#/" "Home" :home]
-                 [nav-link "#/about" "About" :about]]]]))
+    [:nav.navbar.is-info>div.container
+     [:div.navbar-brand
+      [:a.navbar-item {:href "/" :style {:font-weight :bold}} "fcs"]
+      [:span.navbar-burger.burger
+       {:data-target :nav-menu
+        :on-click #(swap! expanded? not)
+        :class (when @expanded? :is-active)}
+       [:span][:span][:span]]]
+     [:div#nav-menu.navbar-menu
+      {:class (when @expanded? :is-active)}
+      [:div.navbar-start
+       [nav-link "#/" "Home" :home]
+       [nav-link "#/about" "About" :about]]]]))
 
 (defn about-page []
   [:section.section>div.container>div.content
@@ -56,17 +56,17 @@
 
 (def router
   (reitit/router
-    [["/" {:name        :home
-           :view        #'home-page
-           :controllers [{:start (fn [_] (rf/dispatch [:page/init-home]))}]}]
-     ["/about" {:name :about
-                :view #'about-page}]]))
+   [["/" {:name        :home
+          :view        #'home-page
+          :controllers [{:start (fn [_] (rf/dispatch [:page/init-home]))}]}]
+    ["/about" {:name :about
+               :view #'about-page}]]))
 
 (defn start-router! []
   (rfe/start!
-    router
-    navigate!
-    {}))
+   router
+   navigate!
+   {}))
 
 ;; -------------------------
 ;; Initialize app
