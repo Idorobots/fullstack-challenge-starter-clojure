@@ -24,7 +24,7 @@
 
 (defn home-page []
   [:section.section>div.container>div.content
-   (when-let [docs @(rf/subscribe [:page-content])]
+   (when-let [docs @(rf/subscribe [:home-page/content])]
      [:div {:dangerouslySetInnerHTML {:__html (md->html docs)}}])])
 
 (defn error-page []

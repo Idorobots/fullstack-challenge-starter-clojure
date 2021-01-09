@@ -11,7 +11,6 @@
                  [cprop "0.1.17"]
                  [day8.re-frame/http-fx "0.2.2"]
                  [expound "0.8.7"]
-                 [funcool/struct "1.4.0"]
                  [luminus-transit "0.1.2"]
                  [luminus-undertow "0.1.7"]
                  [luminus/ring-ttl-session "0.3.3"]

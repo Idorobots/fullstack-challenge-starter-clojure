@@ -1,7 +1,7 @@
 (ns fcs.events
   (:require
-   [re-frame.core :as rf]
    [ajax.core :as ajax]
+   [re-frame.core :as rf]
    [reitit.frontend.easy :as rfe]
    [reitit.frontend.controllers :as rfc]))
 
@@ -32,17 +32,17 @@
     :common/navigate-fx! [:error]}))
 
 (rf/reg-event-db
- :set-content
+ :home-page/set-content
  (fn [db [_ content]]
-   (assoc db :page-content content)))
+   (assoc db :home-page/content content)))
 
 (rf/reg-event-fx
- :fetch-status
+ :home-page/fetch-status
  (fn [_ _]
    {:http-xhrio {:method          :get
                  :uri             "/status"
                  :response-format (ajax/raw-response-format)
-                 :on-success       [:set-content]
+                 :on-success       [:home-page/set-content]
                  :on-failure       [:common/error]}}))
 
 (rf/reg-event-db
@@ -51,35 +51,6 @@
    (assoc db :common/error error)))
 
 (rf/reg-event-fx
- :page/init-home
+ :home-page/init
  (fn [_ _]
-   {:dispatch [:fetch-status]}))
-
-;;subscriptions
-
-(rf/reg-sub
- :common/route
- (fn [db _]
-   (-> db :common/route)))
-
-(rf/reg-sub
- :common/page
- :<- [:common/route]
- (fn [route _]
-   (-> route :data :view)))
-
-(rf/reg-sub
- :common/page-id
- :<- [:common/route]
- (fn [route _]
-   (-> route :data :name)))
-
-(rf/reg-sub
- :page-content
- (fn [db _]
-   (:page-content db)))
-
-(rf/reg-sub
- :common/error
- (fn [db _]
-   (-> db :common/error :response)))
+   {:dispatch [:home-page/fetch-status]}))
